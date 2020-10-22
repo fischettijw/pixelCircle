@@ -1,39 +1,48 @@
-const cellSize = 7;
-const cellNum = 109;
 const colorGridStroke = 'black';
-const strokeGridWeight = 1;
+const strokeGridWeight = 0;
 
-let cX;
-let cY;
+let cellSize;
+let cellNum;
+let cycles;
 
 function initialize() {
-    cX = floor(cellNum / 2);
-    cY = floor(cellNum / 2);
+    cellSize = 60;
+    cellNum = 15;
+    cycles = 6;
 }
 
 function setup() {
     initialize();
-    createCanvas(cellSize * cellNum, cellSize * cellNum);
-    background(0);
+    createCanvas(cellSize * cellNum * 1.2, cellSize * cellNum * 1.2);
+    frameRate(1 / 3);
+    // createCanvas(cellSize * cellNum, cellSize * cellNum);
+    // background(0);
+    // drawGrid(cellSize, cellNum);
+    // fill('yellow');
+    // squCtr(0, 0, cellSize, cellNum);
+    // drawCircle(floor(cellNum / 2), cellSize);
+}
+
+function draw() {
+    // if (cycles = 0) { strokeGridWeight = 0; }
     drawGrid(cellSize, cellNum);
     fill('yellow');
     squCtr(0, 0, cellSize, cellNum);
     drawCircle(floor(cellNum / 2), cellSize);
-}
-
-function draw() {
+    cellSize /= 2;
+    cellNum = cellNum * 2 + 1;
+    cycles--;
+    if (cycles < 0) { noloop };
 
 }
 
 function drawCircle(radius, cWidth) {
     fill('red');
-    // square(0 * cWidth, radius * cWidth, cWidth)
-    // square(radius * cWidth, 0 * cWidth, cWidth)
-    // square(2 * radius * cWidth, radius * cWidth, cWidth)
-    // square(radius * cWidth, 2 * radius * cWidth, cWidth)
-    for (let y = -floor(cellNum / 2); y < floor(cellNum / 2); y++) {
+    for (let y = -floor(cellNum / 2); y <= floor(cellNum / 2); y++) {
         squCtr(Math.round(Math.sqrt((radius * radius) - (y * y))), y, cellSize, cellNum);
+        squCtr(-Math.round(Math.sqrt((radius * radius) - (y * y))), y, cellSize, cellNum);
     };
+
 
 }
 
@@ -42,7 +51,7 @@ function drawGrid(cWidth, cNum) {
     strokeWeight(strokeGridWeight);
     for (let x = 0; x < cNum; x++) {
         for (let y = 0; y < cNum; y++) {
-            fill('green');
+            fill('black');
             square(x * cellSize, y * cellSize, cWidth);
         }
     }

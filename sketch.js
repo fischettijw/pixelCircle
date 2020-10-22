@@ -1,17 +1,14 @@
 const colorFill = 'black';
-const colorGridStroke = 'green';
-const strokeGridWeight = 1;
-
-let cellSize;
-let cellNum;
-let cycles;
-let gridWidth;
+const colorGridStroke = 'white';
+let strokeGridWeight, gridWidth, cellNum, cellSize, cycles, pieDiv;
 
 function initialize() {
+    strokeGridWeight = 1;
     gridWidth = 750;
     cellNum = 15;
     cellSize = gridWidth / cellNum;
-    cycles = 4;
+    cycles = 5;
+    pieDiv = createDiv().style('font-size', '14pt');
 }
 
 function setup() {
@@ -21,15 +18,18 @@ function setup() {
 }
 
 function draw() {
-    // if (cycles = 0) { strokeGridWeight = 0; }
+    if (cycles < 1) {
+        strokeGridWeight = 0;
+        noLoop();
+    }
     drawGrid(cellSize, cellNum);
     fill('yellow');
     squCtr(0, 0, cellSize, cellNum);
     drawCircle(floor(cellNum / 2), cellSize);
     cellNum = cellNum * 2 + 1;
     cellSize = gridWidth / cellNum;
+    output();
     cycles--;
-    if (cycles < 0) { noloop };
 }
 
 function drawCircle(radius, cWidth) {
@@ -53,4 +53,8 @@ function drawGrid(cWidth, cNum) {
 
 function squCtr(x, y, size, num) {
     rect(size * ((floor(num / 2)) + x), size * ((floor(num / 2)) - y), size, size);
+}
+
+function output() {
+    pieDiv.html(`Cycles: ${cycles} - Size: ${nf(cellSize,0,4)}`);
 }

@@ -6,7 +6,7 @@ function initialize() {
     strokeGridWeight = 1;
     gridWidth = 750;
     cellNum = 15;
-    cellSize = gridWidth / cellNum;
+    cellSize = gridWidth / cellNum; //force canvas to stay the same size
     cycles = 5;
     pieDiv = createDiv().style('font-size', '14pt');
 }

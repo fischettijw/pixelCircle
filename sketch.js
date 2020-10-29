@@ -1,5 +1,7 @@
 const colorFill = 'black';
 const colorGridStroke = 'white';
+const colorCenter = 'yellow';
+const colorCircumference = 'red';
 let strokeGridWeight, gridWidth, cellNum, cellSize, cycles, pieDiv;
 
 function initialize() {
@@ -7,7 +9,6 @@ function initialize() {
     gridWidth = 750;
     cellNum = 15;
     cellSize = gridWidth / cellNum; //force canvas to stay the same size
-    cycles = 5;
     pieDiv = createDiv().style('font-size', '14pt');
 }
 
@@ -18,38 +19,31 @@ function setup() {
 }
 
 function draw() {
-    if (cycles < 1) {
-        strokeGridWeight = 0;
-        noLoop();
-    }
+    if (cellNum > 500) { strokeGridWeight = 0; }
+    if (cellNum > 1000) { noLoop(); }
     drawGrid(cellSize, cellNum);
-    fill('yellow');
+    fill(colorCenter);
     squCtr(0, 0, cellSize, cellNum);
     drawCircle(cellNum, cellSize);
-    cellNum = cellNum * 2 + 1;
-    cellSize = gridWidth / cellNum;
     output();
-    cycles--;
+    cellNum = (cellNum * 2) + 1;
+    cellSize = gridWidth / cellNum;
 }
 
 function drawCircle(cNum, cWidth) {
     let radius = floor(cNum / 2);
-    fill('red');
+    fill(colorCircumference);
 
-    for (let x = 0; x <= floor(cNum / 2); x++) {
+    for (let x = -floor(cNum / 2); x <= floor(cNum / 2); x++) {
         let y = round(sqrt((radius * radius) - (x * x)));
-        squCtr(x, y, cWidth, cNum); // UR
-        squCtr(x, -y, cWidth, cNum); // lR
-        squCtr(-x, y, cWidth, cNum); // UR
-        squCtr(-x, -y, cWidth, cNum); // LL
+        squCtr(x, y, cWidth, cNum); // Upper
+        squCtr(x, -y, cWidth, cNum); // lower
     };
 
-    for (let y = 0; y <= floor(cNum / 2); y++) {
+    for (let y = -floor(cNum / 2); y <= floor(cNum / 2); y++) {
         let x = round(sqrt((radius * radius) - (y * y)));
-        squCtr(x, y, cWidth, cNum); // UR
-        squCtr(-x, y, cWidth, cNum); // UL
-        squCtr(x, -y, cWidth, cNum); // LR
-        squCtr(-x, -y, cWidth, cNum); // LL
+        squCtr(x, y, cWidth, cNum); // Right
+        squCtr(-x, y, cWidth, cNum); // Left
     };
 }
 

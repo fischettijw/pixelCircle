@@ -37,17 +37,19 @@ function drawCircle(cNum, cWidth) {
     fill('red');
 
     for (let x = 0; x <= floor(cNum / 2); x++) {
-        squCtr(round(sqrt((radius * radius) - (x * x))), x, cWidth, cNum); // UR
-        squCtr(round(-sqrt((radius * radius) - (x * x))), x, cWidth, cNum); // UL
-        squCtr(round(sqrt((radius * radius) - (x * x))), -x, cWidth, cNum); // LR
-        squCtr(round(-sqrt((radius * radius) - (x * x))), -x, cWidth, cNum); // LL
+        let y = round(sqrt((radius * radius) - (x * x)));
+        squCtr(x, y, cWidth, cNum); // UR
+        squCtr(x, -y, cWidth, cNum); // lR
+        squCtr(-x, y, cWidth, cNum); // UR
+        squCtr(-x, -y, cWidth, cNum); // LL
     };
 
     for (let y = 0; y <= floor(cNum / 2); y++) {
-        squCtr(y, round(sqrt((radius * radius) - (y * y))), cWidth, cNum); // UR
-        squCtr(y, round(-sqrt((radius * radius) - (y * y))), cWidth, cNum); // UL
-        squCtr(-y, round(sqrt((radius * radius) - (y * y))), cWidth, cNum); // LR
-        squCtr(-y, round(-sqrt((radius * radius) - (y * y))), cWidth, cNum); // LL
+        let x = round(sqrt((radius * radius) - (y * y)));
+        squCtr(x, y, cWidth, cNum); // UR
+        squCtr(-x, y, cWidth, cNum); // UL
+        squCtr(x, -y, cWidth, cNum); // LR
+        squCtr(-x, -y, cWidth, cNum); // LL
     };
 }
 

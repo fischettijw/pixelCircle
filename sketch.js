@@ -9,13 +9,13 @@ function initialize() {
     gridWidth = 900;
     cellNum = 15;
     cellSize = gridWidth / cellNum; //force canvas to stay the same size
-    pieDiv = createDiv().style('font-size', '24pt');
+    pieDiv = createDiv().style('font-size', '18pt');
 }
 
 function setup() {
     initialize();
     createCanvas(gridWidth, gridWidth);
-    frameRate(1 / 3);
+    frameRate(1 / 5);
 }
 
 function draw() {
@@ -65,7 +65,7 @@ function squCtr(x, y, size, num) {
 }
 
 function output() {
-    pieDiv.html(`${sp(26)}Diameter: ${cellNum} - Cell/Pixel Ratio: ${nf(cellSize,0,2)}`);
+    pieDiv.html(`${sp(43)}Diameter: ${cellNum} - Cell/Pixel Ratio: ${nf(cellSize,0,2)}`);
 }
 
 function sp(n) {

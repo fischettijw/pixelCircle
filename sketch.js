@@ -6,10 +6,10 @@ let strokeGridWeight, gridWidth, cellNum, cellSize, cycles, pieDiv;
 
 function initialize() {
     strokeGridWeight = 1;
-    gridWidth = 750;
+    gridWidth = 900;
     cellNum = 15;
     cellSize = gridWidth / cellNum; //force canvas to stay the same size
-    pieDiv = createDiv().style('font-size', '14pt');
+    pieDiv = createDiv().style('font-size', '24pt');
 }
 
 function setup() {
@@ -19,8 +19,10 @@ function setup() {
 }
 
 function draw() {
-    if (cellNum > 500) { strokeGridWeight = 0; }
-    if (cellNum > 1000) { noLoop(); }
+    if (cellNum > 500) {
+        strokeGridWeight = 0;
+        noLoop();
+    }
     drawGrid(cellSize, cellNum);
     fill(colorCenter);
     squCtr(0, 0, cellSize, cellNum);
@@ -63,5 +65,14 @@ function squCtr(x, y, size, num) {
 }
 
 function output() {
-    pieDiv.html(`Diameter: ${cellNum} - Cell Size: ${nf(cellSize,0,4)}`);
+    pieDiv.html(`${sp(26)}Diameter: ${cellNum} - Cell/Pixel Ratio: ${nf(cellSize,0,2)}`);
+}
+
+function sp(n) {
+    let htmlSpace = '&nbsp';
+    let ss = "";
+    for (i = 0; i < n; i++) {
+        ss += htmlSpace
+    }
+    return ss;
 }

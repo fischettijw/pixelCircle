@@ -2,7 +2,11 @@ const colorFill = 'black';
 const colorGridStroke = 'white';
 const colorCenter = 'yellow';
 const colorCircumference = 'red';
+const btnHeight = 20;
+const btnSpacing = 10;
+// const btnSpaceV = 40;
 let strokeGridWeight, gridWidth, cellNum, cellSize, cycles, pieDiv;
+let btns;
 
 function initialize() {
     strokeGridWeight = 1;
@@ -10,12 +14,40 @@ function initialize() {
     cellNum = 15;
     cellSize = gridWidth / cellNum; //force canvas to stay the same size
     pieDiv = createDiv().style('font-size', '18pt');
+    btns = [];
+    createButtons(btns);
+}
+
+function createButtons(myButtons) {
+    // document.addEventListener('click', mClicked(e));
+    let btnNum;
+    document.addEventListener('click', (e) => {
+        let x = e.pageX;
+        let y = e.pageY;
+
+
+        console.log(`X: ${e.x} - Y: ${e.y}`);
+    });
+    btnNum = 0;
+    myButtons[0] = createButton("button " + btnNum)
+        .position(gridWidth + btnSpacing, ((2 * btnNum) * btnHeight) + btnSpacing)
+        .style('font-size:18pt;width: 150px;');
+    btnNum = 1;
+    myButtons[1] = createButton("button " + btnNum)
+        .position(gridWidth + btnSpacing, ((2 * btnNum) * btnHeight) + btnSpacing)
+        .style('font-size:18pt;width: 150px;');
+    btnNum = 2;
+    myButtons[2] = createButton("button " + btnNum)
+        .position(gridWidth + btnSpacing, ((2 * btnNum) * btnHeight) + btnSpacing)
+        .style('font-size:18pt;width: 150px;');
 }
 
 function setup() {
     initialize();
     createCanvas(gridWidth, gridWidth);
     frameRate(1 / 5);
+    noLoop();
+
 }
 
 function draw() {

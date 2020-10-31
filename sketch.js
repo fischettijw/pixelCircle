@@ -2,8 +2,8 @@ const colorFill = 'black';
 const colorGridStroke = 'white';
 const colorCenter = 'yellow';
 const colorCircumference = 'red';
-const btnHeight = 20;
-const btnSpacing = 10;
+const btnHeight = 50;
+const btnSpacing = 20;
 // const btnSpaceV = 40;
 let strokeGridWeight, gridWidth, cellNum, cellSize, cycles, pieDiv;
 let btns;
@@ -19,27 +19,22 @@ function initialize() {
 }
 
 function createButtons(myButtons) {
-    // document.addEventListener('click', mClicked(e));
-    let btnNum;
+    let fntSize = 18;
+    let btnWidth = 150;
+
+    for (let btnNum = 0; btnNum < 6; btnNum++) {
+        myButtons[btnNum] = createButton("button " + btnNum)
+            .position(gridWidth + btnSpacing,
+                (2 * btnNum * btnHeight) + ((btnNum + 1) * btnSpacing))
+            .style(`font-size:${fntSize}pt;width: ${btnWidth}px;`);
+    }
+
     document.addEventListener('click', (e) => {
         let x = e.pageX;
         let y = e.pageY;
 
-
         console.log(`X: ${e.x} - Y: ${e.y}`);
     });
-    btnNum = 0;
-    myButtons[0] = createButton("button " + btnNum)
-        .position(gridWidth + btnSpacing, ((2 * btnNum) * btnHeight) + btnSpacing)
-        .style('font-size:18pt;width: 150px;');
-    btnNum = 1;
-    myButtons[1] = createButton("button " + btnNum)
-        .position(gridWidth + btnSpacing, ((2 * btnNum) * btnHeight) + btnSpacing)
-        .style('font-size:18pt;width: 150px;');
-    btnNum = 2;
-    myButtons[2] = createButton("button " + btnNum)
-        .position(gridWidth + btnSpacing, ((2 * btnNum) * btnHeight) + btnSpacing)
-        .style('font-size:18pt;width: 150px;');
 }
 
 function setup() {

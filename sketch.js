@@ -2,9 +2,7 @@ const colorFill = 'black';
 const colorGridStroke = 'white';
 const colorCenter = 'yellow';
 const colorCircumference = 'red';
-const btnHeight = 50;
-const btnSpacing = 20;
-// const btnSpaceV = 40;
+
 let strokeGridWeight, gridWidth, cellNum, cellSize, cycles, pieDiv;
 let btns;
 
@@ -15,41 +13,53 @@ function initialize() {
     cellSize = gridWidth / cellNum; //force canvas to stay the same size
     pieDiv = createDiv().style('font-size', '18pt');
     btns = [];
-    createButtons(btns);
+    createButtons();
 }
 
-function createButtons(myButtons) {
-    let fntSize = 18;
-    let btnWidth = 150;
+function createButtons() {
+    const btnNames = ['15', '31', '63', '127', '255', '511'];
+    const btnSpacing = 5;
+    const fntSize = 18;
+    const btnWidth = 150;
+    const btnHeight = 2 * fntSize;
+    const numButtons = btnNames.length;
 
-    for (let btnNum = 0; btnNum < 6; btnNum++) {
-        myButtons[btnNum] = createButton("button " + btnNum)
+    for (let btnNum = 0; btnNum < numButtons; btnNum++) {
+        btns[btnNum] = createButton(btnNames[btnNum])
             .position(gridWidth + btnSpacing,
-                (2 * btnNum * btnHeight) + ((btnNum + 1) * btnSpacing))
-            .style(`font-size:${fntSize}pt;width: ${btnWidth}px;`);
+                (2 * btnNum * fntSize) + ((btnNum + 1) * btnSpacing))
+            .style(`font-size:${fntSize}pt;width: ${btnWidth}px; height: ${btnHeight}px;`);
+        btns[btnNum].id(btnNames[btnNum]);
     }
 
     document.addEventListener('click', (e) => {
         let x = e.pageX;
         let y = e.pageY;
-
-        console.log(`X: ${e.x} - Y: ${e.y}`);
+        if ((x > gridWidth + btnSpacing) && (x < gridWidth + btnSpacing + btnWidth)) {
+            if ((y > btnSpacing) && (y < (numButtons * (btnSpacing + btnHeight)))) {
+                let buttonNumber = floor(y / (btnHeight + btnSpacing));
+                console.log(btnNames[buttonNumber]);
+                // console.log(btns[buttonNumber].id());
+                cellNum = 2 ** (buttonNumber + 4) - 1;
+                cellSize = gridWidth / cellNum;
+                if (cellNum > 500) {
+                    strokeGridWeight = 0;
+                } else {
+                    strokeGridWeight = 1;
+                }
+                loop();
+            }
+        }
     });
 }
 
 function setup() {
     initialize();
     createCanvas(gridWidth, gridWidth);
-    frameRate(1 / 5);
-    noLoop();
-
+    frameRate();
 }
 
 function draw() {
-    if (cellNum > 500) {
-        strokeGridWeight = 0;
-        noLoop();
-    }
     drawGrid(cellSize, cellNum);
     fill(colorCenter);
     squCtr(0, 0, cellSize, cellNum);
@@ -57,6 +67,7 @@ function draw() {
     output();
     cellNum = (cellNum * 2) + 1;
     cellSize = gridWidth / cellNum;
+    noLoop();
 }
 
 function drawCircle(cNum, cWidth) {

@@ -8,7 +8,7 @@ let btns;
 
 function initialize() {
     strokeGridWeight = 1;
-    gridWidth = 900;
+    gridWidth = 1024;
     cellNum = 15;
     cellSize = gridWidth / cellNum; //force canvas to stay the same size
     pieDiv = createDiv().style('font-size', '18pt');
@@ -17,17 +17,20 @@ function initialize() {
 }
 
 function createButtons() {
-    const btnNames = ['15', '31', '63', '127', '255', '511'];
+    const btnNames = ['15 (~0.06 sec)', '31 (~0.12 sec)', '63 (~0.25 sec)',
+        '127 (~0.5 sec)', '255 (~1 sec)', '511 (~2 sec)', '1023 (~4 sec)'
+    ]; // does not need to be 15, 31, ...
     const btnSpacing = 5;
-    const fntSize = 18;
-    const btnWidth = 150;
+    const canvasMargin = 10;
+    const fntSize = 18; // 12 to 36
+    const btnWidth = fntSize * 10;
     const btnHeight = 2 * fntSize;
     const numButtons = btnNames.length;
 
     for (let btnNum = 0; btnNum < numButtons; btnNum++) {
         btns[btnNum] = createButton(btnNames[btnNum])
-            .position(gridWidth + btnSpacing,
-                (2 * btnNum * fntSize) + ((btnNum + 1) * btnSpacing))
+            .position(gridWidth + btnSpacing + canvasMargin,
+                (2 * btnNum * fntSize) + ((btnNum + 1) * btnSpacing) + canvasMargin)
             .style(`font-size:${fntSize}pt;width: ${btnWidth}px; height: ${btnHeight}px;`);
         btns[btnNum].id(btnNames[btnNum]);
     }
@@ -103,7 +106,7 @@ function squCtr(x, y, size, num) {
 }
 
 function output() {
-    pieDiv.html(`${sp(43)}Diameter: ${cellNum} - Cell/Pixel Ratio: ${nf(cellSize,0,2)}`);
+    pieDiv.html(`${sp(54)}Diameter: ${cellNum} - Cell/Pixel Ratio: ${nf(cellSize,0,2)}`);
 }
 
 function sp(n) {

@@ -13,47 +13,39 @@ function initialize() {
     cellSize = gridWidth / cellNum; //force canvas to stay the same size
     pieDiv = createDiv().style('font-size', '18pt');
     btnArray = [];
-    createButtons();
+    btnLabels = ['15 (~0.06 sec)', '31 (~0.12 sec)', '63 (~0.25 sec)',
+        '127 (~0.5 sec)', '255 (~1 sec)', '511 (~2 sec)', '1023 (~6 sec)'
+    ];
+    btnFontSize = 18;
+    btnFontWidth = null;
+
+    createButtons(btnArray, btnLabels, btnFontSize, btnFontWidth);
 }
 
-function createButtons() {
-    const btnNames = ['15 (~0.06 sec)', '31 (~0.12 sec)', '63 (~0.25 sec)',
-        '127 (~0.5 sec)', '255 (~1 sec)', '511 (~2 sec)', '1023 (~4 sec)'
-    ]; // does not need to be 15, 31, ...
-    const btnSpacing = 5;
-    const canvasMargin = 10;
-    const fntSize = 18; // 12 to 36
-    const btnWidth = fntSize * 10;
-    const btnHeight = 2 * fntSize;
-    const numButtons = btnNames.length;
-
-    for (let btnNum = 0; btnNum < numButtons; btnNum++) {
-        btnArray[btnNum] = createButton(btnNames[btnNum])
-            .position(gridWidth + btnSpacing + canvasMargin,
-                (2 * btnNum * fntSize) + ((btnNum + 1) * btnSpacing) + canvasMargin)
-            .style(`font-size:${fntSize}pt;width: ${btnWidth}px; height: ${btnHeight}px;`);
-        btnArray[btnNum].id(btnNames[btnNum]);
+function createButtons(btns, btnText, fntSz, fntWidth) {
+    let spacing = 5;
+    if (fntWidth == null) { fntWidth = 10 * fntSz } // fntWidth OPTIONAL
+    for (i = 0; i < btnText.length; i++) {
+        let y = i * ((2 * fntSz) + spacing); //i * 40;
+        btns[i] = createButton(btnText[i]);
+        btns[i].position(gridWidth + spacing, y + spacing);
+        btns[i].style(`font-size:${fntSz}pt`);
+        btns[i].style(`width: ${fntWidth}px; height: ${2*fntSz}px`);
+        btns[i].id(i);
+        let btnID = i; // IMPORTANT TO BE HERE WITH 'LET'
+        document.getElementById(i).onclick = function() { btnClicked(btnID); }
     }
+}
 
-    document.addEventListener('click', (e) => {
-        let x = e.pageX;
-        let y = e.pageY;
-        if ((x > gridWidth + btnSpacing) && (x < gridWidth + btnSpacing + btnWidth)) {
-            if ((y > btnSpacing) && (y < (numButtons * (btnSpacing + btnHeight)))) {
-                let buttonNumber = floor(y / (btnHeight + btnSpacing));
-                console.log(btnNames[buttonNumber]);
-                // console.log(btns[buttonNumber].id());
-                cellNum = 2 ** (buttonNumber + 4) - 1;
-                cellSize = gridWidth / cellNum;
-                if (cellNum > 500) {
-                    strokeGridWeight = 0;
-                } else {
-                    strokeGridWeight = 1;
-                }
-                loop();
-            }
-        }
-    });
+function btnClicked(buttonNumber) {
+    cellNum = 2 ** (buttonNumber + 4) - 1;
+    cellSize = gridWidth / cellNum;
+    if (cellNum > 500) {
+        strokeGridWeight = 0;
+    } else {
+        strokeGridWeight = 1;
+    }
+    loop();
 }
 
 function setup() {

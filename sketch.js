@@ -4,7 +4,7 @@ const colorCenter = 'yellow';
 const colorCircumference = 'red';
 
 let strokeGridWeight, gridWidth, cellNum, cellSize, cycles, pieDiv;
-let btns;
+let btnArray, btnLabels, btnFontSize, btnFontWidth;
 
 function initialize() {
     strokeGridWeight = 1;
@@ -12,7 +12,7 @@ function initialize() {
     cellNum = 15;
     cellSize = gridWidth / cellNum; //force canvas to stay the same size
     pieDiv = createDiv().style('font-size', '18pt');
-    btns = [];
+    btnArray = [];
     createButtons();
 }
 
@@ -28,11 +28,11 @@ function createButtons() {
     const numButtons = btnNames.length;
 
     for (let btnNum = 0; btnNum < numButtons; btnNum++) {
-        btns[btnNum] = createButton(btnNames[btnNum])
+        btnArray[btnNum] = createButton(btnNames[btnNum])
             .position(gridWidth + btnSpacing + canvasMargin,
                 (2 * btnNum * fntSize) + ((btnNum + 1) * btnSpacing) + canvasMargin)
             .style(`font-size:${fntSize}pt;width: ${btnWidth}px; height: ${btnHeight}px;`);
-        btns[btnNum].id(btnNames[btnNum]);
+        btnArray[btnNum].id(btnNames[btnNum]);
     }
 
     document.addEventListener('click', (e) => {

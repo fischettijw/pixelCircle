@@ -16,6 +16,7 @@ function initialize() {
     btnLabels = ['15 (~0.06 sec)', '31 (~0.12 sec)', '63 (~0.25 sec)',
         '127 (~0.5 sec)', '255 (~1 sec)', '511 (~2 sec)', '1023 (~6 sec)'
     ];
+    document.title = btnLabels[0];
     btnFontSize = 18;
     btnFontWidth = null;
 
@@ -45,6 +46,7 @@ function btnClicked(buttonNumber) {
     } else {
         strokeGridWeight = 1;
     }
+    document.title = btnLabels[buttonNumber];
     loop();
 }
 

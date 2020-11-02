@@ -20,7 +20,7 @@ function initialize() {
     btnFontSize = 18;
     btnFontWidth = null;
 
-    createButtons(btnArray, btnLabels, btnFontSize, btnFontWidth);
+    createButtons(btnArray, btnLabels, btnFontSize, btnFontWidth); // 'btnFontWidth' optional
 }
 
 function createButtons(btns, btnText, fntSz, fntWidth) {
@@ -52,7 +52,10 @@ function btnClicked(buttonNumber) {
 
 function setup() {
     initialize();
+    // createCanvas(gridWidth, gridWidth).position(10, 40);
     createCanvas(gridWidth, gridWidth);
+
+    window.parent.document.body.style.zoom = 1.0;
     frameRate();
 }
 

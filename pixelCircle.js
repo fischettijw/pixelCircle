@@ -4,7 +4,7 @@ const colorCenter = 'yellow';
 const colorCircumference = 'red';
 
 let strokeGridWeight, gridWidth, cellNum, cellSize, cycles, pieDiv;
-let btnArray, btnLabels, btnFontSize, btnFontWidth;
+let btnArray, btnLabels, btnFontSize, btnFontWidth, currentButton;
 
 function initialize() {
     strokeGridWeight = 1;
@@ -16,7 +16,8 @@ function initialize() {
     btnLabels = ['15 (~0.06 sec)', '31 (~0.12 sec)', '63 (~0.25 sec)',
         '127 (~0.5 sec)', '255 (~1 sec)', '511 (~2 sec)', '1023 (~6 sec)'
     ];
-    document.title = btnLabels[0];
+    currentButton = 0;
+    document.title = btnLabels[currentButton];
     btnFontSize = 18;
     btnFontWidth = null;
 
@@ -46,16 +47,16 @@ function btnClicked(buttonNumber) {
     } else {
         strokeGridWeight = 1;
     }
-    document.title = btnLabels[buttonNumber];
+    currentButton = buttonNumber;
+    document.title = btnLabels[currentButton];
     loop();
 }
 
 function setup() {
     initialize();
-    // createCanvas(gridWidth, gridWidth).position(10, 40);
-    createCanvas(gridWidth, gridWidth);
-
-    window.parent.document.body.style.zoom = 1.0;
+    // createCanvas(gridWidth, gridWidth);
+    createCanvas(gridWidth, gridWidth).position(0, (1080 - 1024) / 2); // 1080 screen vertical pixels - 1024 caanvas height
+    window.parent.document.body.style.zoom = 0.89; // zoom to fit
     frameRate();
 }
 

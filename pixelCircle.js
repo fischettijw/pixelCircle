@@ -3,29 +3,29 @@ const colorGridStroke = 'white';
 const colorCenter = 'yellow';
 const colorCircumference = 'red';
 
-let strokeGridWeight, gridWidth, cellNum, cellSize, cycles, pieDiv;
+let strokeGridWeight, gridWidth, gridHeight, cellNum, cellSize, cycles, pieDiv;
 let btnArray, btnLabels, btnFontSize, btnFontWidth, currentButton;
 
 function initialize() {
     strokeGridWeight = 1;
     gridWidth = 1024;
+    gridHeight = gridWidth;
     cellNum = 15;
     cellSize = gridWidth / cellNum; //force canvas to stay the same size
-    pieDiv = createDiv().style('font-size', '18pt');
+    pieDiv = createDiv().style('font-size', '24pt');
     btnArray = [];
-    btnLabels = ['15 (~0.06 sec)', '31 (~0.12 sec)', '63 (~0.25 sec)',
-        '127 (~0.5 sec)', '255 (~1 sec)', '511 (~2 sec)', '1023 (~6 sec)'
+    btnLabels = ['D:15 - R:64', 'D:31 - R:32', 'D:63 - R:16',
+        'D:127 - R:8', 'D:255 - R:4', 'D:511 - R:2', 'D:1023 - R:1'
     ];
     currentButton = 0;
     document.title = btnLabels[currentButton];
     btnFontSize = 18;
     btnFontWidth = null;
-
     createButtons(btnArray, btnLabels, btnFontSize, btnFontWidth); // 'btnFontWidth' optional
 }
 
 function createButtons(btns, btnText, fntSz, fntWidth) {
-    let spacing = 5;
+    let spacing = 10;
     if (fntWidth == null) { fntWidth = 10 * fntSz } // fntWidth OPTIONAL
     for (i = 0; i < btnText.length; i++) {
         let y = i * ((2 * fntSz) + spacing); //i * 40;
@@ -54,9 +54,10 @@ function btnClicked(buttonNumber) {
 
 function setup() {
     initialize();
-    // createCanvas(gridWidth, gridWidth);
-    createCanvas(gridWidth, gridWidth).position(0, (1080 - 1024) / 2); // 1080 screen vertical pixels - 1024 caanvas height
-    window.parent.document.body.style.zoom = 0.89; // zoom to fit
+    let pieDivOutput = 36; // accounts for 'pieDiv' output above canvas
+    createCanvas(gridWidth, gridHeight).position(5, pieDivOutput);
+    let zoomRatio = (window.parent.windowHeight - pieDivOutput) / gridHeight;
+    window.parent.document.body.style.zoom = zoomRatio; // zoom to fit
     frameRate();
 }
 
@@ -104,7 +105,9 @@ function squCtr(x, y, size, num) {
 }
 
 function output() {
-    pieDiv.html(`${sp(54)}Diameter: ${cellNum} - Cell/Pixel Ratio: ${nf(cellSize,0,2)}`);
+    let ratio = nf(round(cellSize, 0, 2) * 100) / 100;
+    ratio = 1024 / (cellNum + 1);
+    pieDiv.html(`${sp(17)}Diameter: ${cellNum} ${sp(6)}Actual Pixels: ${cellNum**2}${sp(6)}Cell/Pixel Ratio: ${ratio}`);
 }
 
 function sp(n) {
